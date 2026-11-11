@@ -57,7 +57,7 @@ place_order(customer_type, items, fulfillment="pickup")
 Both operations require:
 
 - Customer type: exactly `regular` or `student`.
-- Fulfillment: exactly `pickup` or `delivery`.
+- Fulfillment: exactly `pickup`, `delivery`, or `express`.
 - Items: a nonempty list of dictionaries, each containing `product_id` and `quantity`.
 - A valid product ID for every item.
 - An integer quantity from 1 through 99 inclusive for each item. Booleans, fractional numbers, and numeric strings are not valid quantities when calling the service directly.
@@ -87,6 +87,8 @@ All service calculations and stored monetary values use integer Canadian cents.
 3. Round the discount to the nearest whole cent, with half a cent rounded upward. Do not use binary floating-point values for money calculations.
 4. Pickup is free.
 5. Delivery costs 600 cents ($6.00). Delivery is free when the subtotal minus the discount is at least 10,000 cents ($100.00).
+   Express costs 1,200 cents ($12.00). The express fee is never waived, even when standard delivery would be free.
+   The student discount applies to merchandise only, not to delivery or express charges.
 6. Total = subtotal minus discount plus delivery charge. No taxes or other charges apply.
 
 Examples—all amounts below are in cents:
@@ -94,6 +96,7 @@ Examples—all amounts below are in cents:
 - Regular pickup, two notebooks: subtotal 1,000; discount 0; delivery 0; total 1,000.
 - Student delivery, two hoodies: subtotal 8,000; discount 800; delivery 600; total 7,800.
 - Regular delivery, three hoodies: subtotal 12,000; discount 0; delivery 0; total 12,000.
+- Student express, two hoodies: subtotal 8,000; discount 800; delivery 1,200; total 8,400.
 
 These rules apply identically to quotes and placed orders.
 

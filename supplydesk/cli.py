@@ -30,7 +30,10 @@ def build_parser():
     for name in ("quote", "place"):
         command = commands.add_parser(name)
         command.add_argument("--customer", choices=("regular", "student"), default="regular")
-        command.add_argument("--fulfillment", choices=("pickup", "delivery"), default="pickup")
+        command.add_argument(
+            "--fulfillment", choices=("pickup", "delivery", "express"), default="pickup",
+            help="pickup (free), delivery ($6, free over $100), or express ($12, never waived)",
+        )
         command.add_argument("--item", type=parse_item, action="append", required=True)
     commands.add_parser("orders", help="list orders in placement order")
     show = commands.add_parser("show", help="show one order")
